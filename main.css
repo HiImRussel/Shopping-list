@@ -25,6 +25,7 @@ nav {
       -ms-flex-align: center;
           align-items: center;
   height: 75px;
+  z-index: 8;
 }
 
 nav h1 {
@@ -306,7 +307,6 @@ main {
           align-items: center;
   padding: 10px 15px;
   color: white;
-  width: 100%;
 }
 
 .rootElement .content-box {
@@ -318,13 +318,34 @@ main {
       justify-content: space-around;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  padding: 0px 15px;
   max-height: 0px;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   width: 80vw;
   position: relative;
   z-index: -1;
+  overflow-y: scroll;
+}
+
+.rootElement .content-box ::-webkit-scrollbar {
+  width: 13px;
+  height: 13px;
+}
+
+.rootElement .content-box ::-webkit-scrollbar-thumb {
+  background: linear-gradient(13deg, #c4c4c4 14%, #c4c4c4 64%);
+  border-radius: 10px;
+}
+
+.rootElement .content-box ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(13deg, #c4c4c4 14%, #c4c4c4 64%);
+}
+
+.rootElement .content-box ::-webkit-scrollbar-track {
+  background: #ffffff;
+  border-radius: 10px;
+  -webkit-box-shadow: inset 7px 10px 12px #f0f0f0;
+          box-shadow: inset 7px 10px 12px #f0f0f0;
 }
 
 .rootElement .item {
@@ -351,9 +372,58 @@ main {
       -ms-flex-direction: column;
           flex-direction: column;
   position: relative;
+  margin: 15px;
 }
 
 .rootElement .item button {
+  background-color: #4253e9;
+  border: 0px;
+  padding: 5px 20px;
+  margin-top: 10px;
+  border-radius: 50px;
+  color: white;
+  cursor: pointer;
+}
+
+#search-result {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin-top: 20px;
+  background-color: #f8f8f8;
+  padding: 30px;
+}
+
+#search-result .item {
+  background-color: white;
+  -webkit-box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.06);
+          box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.06);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 30px;
+  margin: 15px;
+}
+
+#search-result .item h2 {
+  margin-top: 10px;
+}
+
+#search-result .item button {
   background-color: #4253e9;
   border: 0px;
   padding: 5px 20px;

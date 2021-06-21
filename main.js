@@ -5,7 +5,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from) {
 };
 var closeTransition = function (rootElement) {
     rootElement.style.maxHeight = "0px";
-    rootElement.style.padding = "0px 15px";
+    rootElement.style.padding = "0px 0px";
     rootElement.style.zIndex = "-4";
 };
 var openTransition = function (item) {
@@ -31,7 +31,7 @@ var closeBox = function (e) {
     var rootElement = e.target.parentElement.parentElement.getElementsByClassName("content-box")[0];
     rootElement.style.zIndex = 3;
     rootElement.style.maxHeight = "600px";
-    rootElement.style.padding = "20px 15px";
+    rootElement.style.padding = "20px 0px";
     items.forEach(function (item) {
         item.removeEventListener("transitionend", closeTransition);
         rootElement.addEventListener("transitionend", openTransition(item));
@@ -133,41 +133,47 @@ document.getElementById("add-menu").addEventListener("animationend", function ()
 //adding product to list
 document.getElementById("add-to-list").addEventListener("submit", function (e) {
     e.preventDefault();
-    document.getElementById("add-menu").style.animation =
-        "fadeOut 0.3s ease-in-out";
-    isVisable = false;
     var name = document.getElementsByName("Name")[0].value.toString();
     var amount = parseFloat(document.getElementsByName("Amount")[0].value);
     var description = document.getElementsByName("Description")[0].value.toString();
     var category = document.getElementsByName("Category")[0].value.toString();
     if (name.length > 0) {
-        var newToList = {
-            name: name,
-            amount: amount > 0 ? amount : 1,
-            category: category,
-            description: description.length > 0 ? description : "",
-            id: Math.floor(Math.random() * 99999)
-        };
-        var allInList = document.cookie;
-        if (allInList === "") {
-            var newArrayList = [newToList];
-            document.cookie = "list=" + JSON.stringify(newArrayList) + ";expires=Thu, 18 Dec 3999 12:00:00 UTC";
+        if (description.length <= 50) {
+            document.getElementsByName("Name")[0].style.border = "0px";
+            var newToList = {
+                name: name,
+                amount: amount > 0 ? amount : 1,
+                category: category,
+                description: description.length > 0 ? description : "",
+                id: Math.floor(Math.random() * 99999)
+            };
+            var allInList = document.cookie;
+            if (allInList === "") {
+                var newArrayList = [newToList];
+                document.cookie = "list=" + JSON.stringify(newArrayList) + ";expires=Thu, 18 Dec 3999 12:00:00 UTC";
+            }
+            else {
+                var OldList = JSON.parse(document.cookie.toString().split("=")[1]);
+                var newTaskList = __spreadArray(__spreadArray([], OldList), [newToList]);
+                document.cookie = "list=" + JSON.stringify(newTaskList) + ";expires=Thu, 18 Dec 3999 12:00:00 UTC";
+            }
+            document.getElementsByName("Description")[0].value =
+                "";
+            document.getElementsByName("Name")[0].value = "";
+            document.getElementsByName("Amount")[0].value = "";
+            document.getElementsByName("Category")[0].value =
+                "Food";
+            document.getElementById("add-menu").style.animation =
+                "fadeOut 0.3s ease-in-out";
+            isVisable = false;
+            LoadData();
         }
-        else {
-            var OldList = JSON.parse(document.cookie.toString().split("=")[1]);
-            var newTaskList = __spreadArray(__spreadArray([], OldList), [newToList]);
-            document.cookie = "list=" + JSON.stringify(newTaskList) + ";expires=Thu, 18 Dec 3999 12:00:00 UTC";
-        }
-        document.getElementsByName("Description")[0].value =
-            "";
-        document.getElementsByName("Name")[0].value = "";
-        document.getElementsByName("Amount")[0].value = "";
-        document.getElementsByName("Category")[0].value =
-            "Food";
-        LoadData();
+    }
+    else {
+        document.getElementsByName("Name")[0].style.border = "1px solid red";
     }
 });
-//
+//delete when searching
 var deleteWhenSearch = function (id, e) {
     var parent = e.target.parentElement;
     var list = JSON.parse(document.cookie.toString().split("=")[1]);

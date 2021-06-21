@@ -1,6 +1,6 @@
 const closeTransition = (rootElement) => {
   rootElement.style.maxHeight = "0px";
-  rootElement.style.padding = "0px 15px";
+  rootElement.style.padding = "0px 0px";
   rootElement.style.zIndex = "-4";
 };
 
@@ -40,7 +40,7 @@ const closeBox = (e): void => {
 
   rootElement.style.zIndex = 3;
   rootElement.style.maxHeight = "600px";
-  rootElement.style.padding = "20px 15px";
+  rootElement.style.padding = "20px 0px";
 
   items.forEach((item) => {
     item.removeEventListener("transitionend", closeTransition);
@@ -158,9 +158,6 @@ document.getElementById("add-menu").addEventListener("animationend", () => {
 //adding product to list
 document.getElementById("add-to-list").addEventListener("submit", (e) => {
   e.preventDefault();
-  document.getElementById("add-menu").style.animation =
-    "fadeOut 0.3s ease-in-out";
-  isVisable = false;
   const name: string = (
     document.getElementsByName("Name")[0] as HTMLInputElement
   ).value.toString();
@@ -176,38 +173,46 @@ document.getElementById("add-to-list").addEventListener("submit", (e) => {
   ).value.toString();
 
   if (name.length > 0) {
-    const newToList = {
-      name,
-      amount: amount > 0 ? amount : 1,
-      category,
-      description: description.length > 0 ? description : "",
-      id: Math.floor(Math.random() * 99999),
-    };
+    if (description.length <= 50) {
+      document.getElementsByName("Name")[0].style.border = "0px";
+      const newToList = {
+        name,
+        amount: amount > 0 ? amount : 1,
+        category,
+        description: description.length > 0 ? description : "",
+        id: Math.floor(Math.random() * 99999),
+      };
 
-    const allInList = document.cookie;
-    if (allInList === "") {
-      const newArrayList: object[] = [newToList];
-      document.cookie = `list=${JSON.stringify(
-        newArrayList
-      )};expires=Thu, 18 Dec 3999 12:00:00 UTC`;
-    } else {
-      const OldList = JSON.parse(document.cookie.toString().split("=")[1]);
-      const newTaskList = [...OldList, newToList];
-      document.cookie = `list=${JSON.stringify(
-        newTaskList
-      )};expires=Thu, 18 Dec 3999 12:00:00 UTC`;
+      const allInList = document.cookie;
+      if (allInList === "") {
+        const newArrayList: object[] = [newToList];
+        document.cookie = `list=${JSON.stringify(
+          newArrayList
+        )};expires=Thu, 18 Dec 3999 12:00:00 UTC`;
+      } else {
+        const OldList = JSON.parse(document.cookie.toString().split("=")[1]);
+        const newTaskList = [...OldList, newToList];
+        document.cookie = `list=${JSON.stringify(
+          newTaskList
+        )};expires=Thu, 18 Dec 3999 12:00:00 UTC`;
+      }
+      (document.getElementsByName("Description")[0] as HTMLInputElement).value =
+        "";
+      (document.getElementsByName("Name")[0] as HTMLInputElement).value = "";
+      (document.getElementsByName("Amount")[0] as HTMLInputElement).value = "";
+      (document.getElementsByName("Category")[0] as HTMLInputElement).value =
+        "Food";
+
+      document.getElementById("add-menu").style.animation =
+        "fadeOut 0.3s ease-in-out";
+      isVisable = false;
+      LoadData();
     }
-    (document.getElementsByName("Description")[0] as HTMLInputElement).value =
-      "";
-    (document.getElementsByName("Name")[0] as HTMLInputElement).value = "";
-    (document.getElementsByName("Amount")[0] as HTMLInputElement).value = "";
-    (document.getElementsByName("Category")[0] as HTMLInputElement).value =
-      "Food";
-
-    LoadData();
+  } else {
+    document.getElementsByName("Name")[0].style.border = "1px solid red";
   }
 });
-//
+//delete when searching
 const deleteWhenSearch = (id, e) => {
   const parent = e.target.parentElement;
 

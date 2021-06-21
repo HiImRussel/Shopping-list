@@ -22,6 +22,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   height: 75px;
+  z-index: 8;
   h1 {
     margin-left: 20px;
     color: white;
@@ -216,19 +217,34 @@ main {
     align-items: center;
     padding: 10px 15px;
     color: white;
-    width: 100%;
   }
   .content-box {
     display: flex;
     background-color: #f8f8f8;
     justify-content: space-around;
     flex-wrap: wrap;
-    padding: 0px 15px;
     max-height: 0px;
     transition: all 0.3s ease-in-out;
     width: 80vw;
     position: relative;
     z-index: -1;
+    overflow-y: scroll;
+    ::-webkit-scrollbar {
+      width: 13px;
+      height: 13px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(13deg, #c4c4c4 14%, #c4c4c4 64%);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(13deg, #c4c4c4 14%, #c4c4c4 64%);
+    }
+    ::-webkit-scrollbar-track {
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: inset 7px 10px 12px #f0f0f0;
+    }
   }
   .item {
     text-align: center;
@@ -243,6 +259,40 @@ main {
     align-items: center;
     flex-direction: column;
     position: relative;
+    margin: 15px;
+
+    button {
+      background-color: $mainColor;
+      border: 0px;
+      padding: 5px 20px;
+      margin-top: 10px;
+      border-radius: 50px;
+      color: white;
+      cursor: pointer;
+    }
+  }
+}
+
+#search-result {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 20px;
+  background-color: #f8f8f8;
+  padding: 30px;
+
+  .item {
+    background-color: white;
+    box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    margin: 15px;
+    h2 {
+      margin-top: 10px;
+    }
 
     button {
       background-color: $mainColor;
