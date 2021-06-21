@@ -1,0 +1,87 @@
+$mainColor: #4253e9;
+$darkerColor: #212c88;
+$mainFont: "Oxygen", sans-serif;
+
+* {
+  margin: 0px;
+  font-family: $mainFont;
+}
+
+button:focus,
+input:focus {
+  outline: none;
+}
+
+nav {
+  position: sticky;
+  top: 0px;
+  background-color: $mainColor;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 75px;
+  h1 {
+    margin-left: 20px;
+    color: white;
+    font-size: 1.1em;
+  }
+  button {
+    margin-right: 20px;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    background-color: transparent;
+    border-radius: 100%;
+    border: 0px;
+    color: white;
+    font-size: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    box-sizing: content-box;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      transform: scale(1.3);
+      background-color: $darkerColor;
+    }
+  }
+
+  input {
+    width: 40%;
+    background-color: $darkerColor;
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 7px;
+    color: white;
+
+    &::placeholder {
+      color: rgb(201, 201, 201);
+      font-weight: bold;
+    }
+  }
+}
+
+main {
+  min-height: calc(100vh - 75px);
+  background-color: #f2f2f2;
+}
+
+#no-products {
+  height: calc(100% - 75px);
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    margin-top: 30px;
+    height: 60vh;
+  }
+
+  h3 {
+    margin-top: 20px;
+    color: #c5c5c5;
+  }
+}
