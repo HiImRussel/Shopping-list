@@ -3,19 +3,23 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from) {
         to[j] = from[i];
     return to;
 };
+//function to close effect (required to use removeEventListener)
 var closeTransition = function (rootElement) {
     rootElement.style.maxHeight = "0px";
     rootElement.style.padding = "0px 0px";
     rootElement.style.zIndex = "-4";
 };
+//function to open effect (required to use removeEventListener)
 var openTransition = function (item) {
     item.style.opacity = "1";
 };
+//close category box
 var openBox = function (e) {
     var items = e.target.parentElement.parentElement
         .getElementsByClassName("content-box")[0]
         .querySelectorAll(".item");
     var rootElement = e.target.parentElement.parentElement.getElementsByClassName("content-box")[0];
+    //animation for closing
     rootElement.removeEventListener("transitionend", openTransition);
     items.forEach(function (item) {
         item.style.opacity = item.style.opacity = "0";
@@ -24,11 +28,13 @@ var openBox = function (e) {
     e.target.removeEventListener("click", openBox);
     e.target.addEventListener("click", closeBox);
 };
+//open category box
 var closeBox = function (e) {
     var items = e.target.parentElement.parentElement
         .getElementsByClassName("content-box")[0]
         .querySelectorAll(".item");
     var rootElement = e.target.parentElement.parentElement.getElementsByClassName("content-box")[0];
+    //animation for open category box
     rootElement.style.zIndex = 3;
     rootElement.style.maxHeight = "600px";
     rootElement.style.padding = "20px 0px";
@@ -39,6 +45,7 @@ var closeBox = function (e) {
     e.target.removeEventListener("click", closeBox);
     e.target.addEventListener("click", openBox);
 };
+//delete item from main list (not from search bar)
 var deleteFromList = function (e, id, root) {
     var item_id = parseInt(id);
     var list = JSON.parse(document.cookie.toString().split("=")[1]);
@@ -52,6 +59,7 @@ var deleteFromList = function (e, id, root) {
         }
     }
 };
+//loading first data and checking if there is some items to display
 var LoadData = function () {
     if (document.cookie === "" || document.cookie.length === 7) {
         document.getElementById("no-products").style.display = "flex";
@@ -79,6 +87,7 @@ var LoadData = function () {
             var categoryElement = document.createElement("div");
             categoryElement.setAttribute("class", "category");
             categoryElement.innerHTML = "<p>" + category + "</p>";
+            //create button to target showing elements
             var button = document.createElement("button");
             button.innerText = "+";
             button.addEventListener("click", closeBox);
@@ -89,9 +98,12 @@ var LoadData = function () {
             rootElement.appendChild(categoryElement);
             list_1.forEach(function (element) {
                 if (element.category === category) {
+                    //create item box
                     var item = document.createElement("div");
                     item.setAttribute("class", "item");
+                    //filling item box with description data
                     item.innerHTML = "<h2>" + element.name + "</h2><h2>Amount:" + element.amount + "</h2><p>" + element.description + "</p>";
+                    //creating button to delete item from list
                     var button_1 = document.createElement("button");
                     button_1.innerText = "DELETE";
                     button_1.addEventListener("click", function (e) {
@@ -106,6 +118,7 @@ var LoadData = function () {
         });
     }
 };
+//first data load
 LoadData();
 var isVisable = false;
 //add section fadeIn and Out animation
@@ -114,6 +127,7 @@ document.getElementById("close").addEventListener("click", function () {
         "fadeOut 0.3s ease-in-out";
     isVisable = false;
 });
+//handler to open add product menu
 document.getElementById("add").addEventListener("click", function () {
     document.getElementById("search-bar").value = "";
     search();
@@ -122,6 +136,7 @@ document.getElementById("add").addEventListener("click", function () {
         "fadeIn 0.3s ease-in-out";
     isVisable = true;
 });
+//checking is menu add menu open
 document.getElementById("add-menu").addEventListener("animationend", function () {
     if (isVisable) {
         document.getElementById("add-menu").style.display = "flex";
@@ -140,6 +155,7 @@ document.getElementById("add-to-list").addEventListener("submit", function (e) {
     if (name.length > 0) {
         if (description.length <= 50) {
             document.getElementsByName("Name")[0].style.border = "0px";
+            //new item to list
             var newToList = {
                 name: name,
                 amount: amount > 0 ? amount : 1,
@@ -147,6 +163,7 @@ document.getElementById("add-to-list").addEventListener("submit", function (e) {
                 description: description.length > 0 ? description : "",
                 id: Math.floor(Math.random() * 99999)
             };
+            //fill cookie with new item data
             var allInList = document.cookie;
             if (allInList === "") {
                 var newArrayList = [newToList];
@@ -200,9 +217,11 @@ var search = function () {
                 document.getElementById("no-products").style.display = "flex";
             }
             else {
+                //rot element for list
                 var rootElement_1 = document.createElement("div");
                 rootElement_1.setAttribute("id", "search-result");
                 matchedItems.forEach(function (element) {
+                    //item box
                     var item = document.createElement("div");
                     item.setAttribute("class", "item");
                     item.innerHTML = "<h2>" + element.name + "</h2><h2>Amount:" + element.amount + "</h2><p>" + element.description + "</p>";

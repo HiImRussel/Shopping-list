@@ -1,13 +1,16 @@
+//function to close effect (required to use removeEventListener)
 const closeTransition = (rootElement) => {
   rootElement.style.maxHeight = "0px";
   rootElement.style.padding = "0px 0px";
   rootElement.style.zIndex = "-4";
 };
 
+//function to open effect (required to use removeEventListener)
 const openTransition = (item) => {
   item.style.opacity = "1";
 };
 
+//close category box
 const openBox = (e): void => {
   const items = e.target.parentElement.parentElement
     .getElementsByClassName("content-box")[0]
@@ -18,6 +21,7 @@ const openBox = (e): void => {
       "content-box"
     )[0];
 
+  //animation for closing
   rootElement.removeEventListener("transitionend", openTransition);
   items.forEach((item) => {
     item.style.opacity = item.style.opacity = "0";
@@ -28,6 +32,7 @@ const openBox = (e): void => {
   e.target.addEventListener("click", closeBox);
 };
 
+//open category box
 const closeBox = (e): void => {
   const items = e.target.parentElement.parentElement
     .getElementsByClassName("content-box")[0]
@@ -38,6 +43,7 @@ const closeBox = (e): void => {
       "content-box"
     )[0];
 
+  //animation for open category box
   rootElement.style.zIndex = 3;
   rootElement.style.maxHeight = "600px";
   rootElement.style.padding = "20px 0px";
@@ -52,6 +58,7 @@ const closeBox = (e): void => {
   e.target.addEventListener("click", openBox);
 };
 
+//delete item from main list (not from search bar)
 const deleteFromList = (e, id, root) => {
   const item_id = parseInt(id);
   const list = JSON.parse(document.cookie.toString().split("=")[1]);
@@ -69,6 +76,7 @@ const deleteFromList = (e, id, root) => {
   }
 };
 
+//loading first data and checking if there is some items to display
 const LoadData = (): void => {
   if (document.cookie === "" || document.cookie.length === 7) {
     document.getElementById("no-products").style.display = "flex";
@@ -98,6 +106,7 @@ const LoadData = (): void => {
       categoryElement.setAttribute("class", "category");
       categoryElement.innerHTML = `<p>${category}</p>`;
 
+      //create button to target showing elements
       const button = document.createElement("button");
       button.innerText = "+";
       button.addEventListener("click", closeBox);
@@ -110,9 +119,12 @@ const LoadData = (): void => {
       rootElement.appendChild(categoryElement);
       list.forEach((element) => {
         if (element.category === category) {
+          //create item box
           const item = document.createElement("div");
           item.setAttribute("class", "item");
+          //filling item box with description data
           item.innerHTML = `<h2>${element.name}</h2><h2>Amount:${element.amount}</h2><p>${element.description}</p>`;
+          //creating button to delete item from list
           const button = document.createElement("button");
           button.innerText = "DELETE";
           button.addEventListener("click", (e) =>
@@ -128,6 +140,7 @@ const LoadData = (): void => {
   }
 };
 
+//first data load
 LoadData();
 
 var isVisable = false;
@@ -138,6 +151,7 @@ document.getElementById("close").addEventListener("click", () => {
   isVisable = false;
 });
 
+//handler to open add product menu
 document.getElementById("add").addEventListener("click", () => {
   (document.getElementById("search-bar") as HTMLInputElement).value = "";
   search();
@@ -147,6 +161,7 @@ document.getElementById("add").addEventListener("click", () => {
   isVisable = true;
 });
 
+//checking is menu add menu open
 document.getElementById("add-menu").addEventListener("animationend", () => {
   if (isVisable) {
     document.getElementById("add-menu").style.display = "flex";
@@ -175,6 +190,7 @@ document.getElementById("add-to-list").addEventListener("submit", (e) => {
   if (name.length > 0) {
     if (description.length <= 50) {
       document.getElementsByName("Name")[0].style.border = "0px";
+      //new item to list
       const newToList = {
         name,
         amount: amount > 0 ? amount : 1,
@@ -183,6 +199,7 @@ document.getElementById("add-to-list").addEventListener("submit", (e) => {
         id: Math.floor(Math.random() * 99999),
       };
 
+      //fill cookie with new item data
       const allInList = document.cookie;
       if (allInList === "") {
         const newArrayList: object[] = [newToList];
@@ -212,6 +229,7 @@ document.getElementById("add-to-list").addEventListener("submit", (e) => {
     document.getElementsByName("Name")[0].style.border = "1px solid red";
   }
 });
+
 //delete when searching
 const deleteWhenSearch = (id, e) => {
   const parent = e.target.parentElement;
@@ -248,10 +266,12 @@ const search = () => {
       if (matchedItems.length === 0) {
         document.getElementById("no-products").style.display = "flex";
       } else {
+        //rot element for list
         const rootElement = document.createElement("div");
         rootElement.setAttribute("id", "search-result");
 
         matchedItems.forEach((element) => {
+          //item box
           const item = document.createElement("div");
           item.setAttribute("class", "item");
           item.innerHTML = `<h2>${element.name}</h2><h2>Amount:${element.amount}</h2><p>${element.description}</p>`;
