@@ -4,7 +4,9 @@
 }
 
 button:focus,
-input:focus {
+input:focus,
+textarea:focus,
+select:focus {
   outline: none;
 }
 
@@ -95,6 +97,17 @@ nav input::placeholder {
 main {
   min-height: calc(100vh - 75px);
   background-color: #f2f2f2;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 #no-products {
@@ -120,5 +133,233 @@ main {
 #no-products h3 {
   margin-top: 20px;
   color: #c5c5c5;
+}
+
+#close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: white;
+  background-color: transparent;
+  border: 0px;
+  font-size: 2em;
+  cursor: pointer;
+}
+
+#add-menu {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  display: none;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.438);
+  z-index: 9;
+}
+
+#add-menu form {
+  background-color: white;
+  padding: 20px 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#add-menu form select {
+  width: 100%;
+  margin-bottom: 10px;
+  border: 0px;
+  background-color: #f3f3f3;
+  padding: 10px;
+}
+
+#add-menu form textarea {
+  resize: none;
+  margin-bottom: 10px;
+  border: 0px;
+  background-color: #f3f3f3;
+  padding: 10px;
+  height: 20vh;
+  width: 100%;
+}
+
+#add-menu form h3 {
+  margin-bottom: 10px;
+}
+
+#add-menu form div {
+  margin-bottom: 10px;
+}
+
+#add-menu form div input {
+  border: 0px;
+  background-color: #f3f3f3;
+  padding: 10px;
+}
+
+#add-menu form div input:nth-of-type(1) {
+  width: 70%;
+  margin-right: 3%;
+}
+
+#add-menu form div input:nth-of-type(2) {
+  width: 25%;
+}
+
+#add-menu form button {
+  width: 50%;
+  background-color: #4253e9;
+  color: white;
+  font-weight: bold;
+  border: 0px;
+  padding: 10px 0px;
+  border-radius: 50px;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+#add-menu form button:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+#list {
+  width: 80vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.rootElement {
+  width: 80vw;
+  margin: 15px 0px;
+}
+
+.rootElement .category {
+  background-color: #4253e9;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px 15px;
+  color: white;
+  width: 100%;
+}
+
+.rootElement .content-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: #f8f8f8;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  padding: 0px 15px;
+  max-height: 0px;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  width: 80vw;
+  position: relative;
+  z-index: -1;
+}
+
+.rootElement .item {
+  text-align: center;
+  background-color: #ffffff;
+  -webkit-box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.06);
+          box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.06);
+  padding: 30px;
+  opacity: 0;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  height: 150px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: relative;
+}
+
+.rootElement .item button {
+  background-color: #4253e9;
+  border: 0px;
+  padding: 5px 20px;
+  margin-top: 10px;
+  border-radius: 50px;
+  color: white;
+  cursor: pointer;
 }
 /*# sourceMappingURL=main.css.map */

@@ -15,7 +15,7 @@
     <nav>
       <h1>SHOPPING LIST</h1>
       <input type="text" name="search" placeholder="Search" />
-      <button>+</button>
+      <button id="add">+</button>
     </nav>
     <main>
       <section id="no-products">
@@ -422,7 +422,26 @@
         </svg>
         <h3>You don't have products in your shoping list!</h3>
       </section>
+      <section id="list"></section>
     </main>
+    <section id="add-menu">
+      <button id="close">X</button>
+      <form id="add-to-list">
+        <h3>Fill inputs with data</h3>
+        <div>
+          <input type="text" placeholder="Name" name="Name" />
+          <input type="number" placeholder="Amount" name="Amount" />
+        </div>
+        <select name="Category">
+          <option>Food</option>
+          <option>Drinks</option>
+          <option>Gasoline</option>
+          <option>Other</option>
+        </select>
+        <textarea placeholder="Optional message" name="Description"></textarea>
+        <button>SUBMIT</button>
+      </form>
+    </section>
   </body>
   <script src="main.js"></script>
 </html>
