@@ -139,6 +139,8 @@ document.getElementById("close").addEventListener("click", () => {
 });
 
 document.getElementById("add").addEventListener("click", () => {
+  (document.getElementById("search-bar") as HTMLInputElement).value = "";
+  search();
   document.getElementById("add-menu").style.display = "flex";
   document.getElementById("add-menu").style.animation =
     "fadeIn 0.3s ease-in-out";
@@ -205,5 +207,66 @@ document.getElementById("add-to-list").addEventListener("submit", (e) => {
     LoadData();
   }
 });
+//
+const deleteWhenSearch = (id, e) => {
+  const parent = e.target.parentElement;
+
+  const list = JSON.parse(document.cookie.toString().split("=")[1]);
+  const newList = list.filter((item) => item.id !== id);
+
+  document.cookie = `list=${JSON.stringify(
+    newList
+  )};expires=Thu, 18 Dec 3999 12:00:00 UTC`;
+
+  parent.remove();
+  search();
+};
 
 //search
+const search = () => {
+  if (document.cookie === "" || document.cookie.length === 7) {
+    document.getElementById("no-products").style.display = "flex";
+    if (document.getElementById("list") !== null) {
+      document.getElementById("list").innerHTML = "";
+    }
+  } else {
+    document.getElementById("list").innerHTML = "";
+    const value = (
+      document.getElementById("search-bar") as HTMLInputElement
+    ).value.toString();
+    if (value.length > 0) {
+      const list = JSON.parse(document.cookie.toString().split("=")[1]);
+
+      const matchedItems = list.filter(
+        (item) => item.name.indexOf(value) !== -1
+      );
+      if (matchedItems.length === 0) {
+        document.getElementById("no-products").style.display = "flex";
+      } else {
+        const rootElement = document.createElement("div");
+        rootElement.setAttribute("id", "search-result");
+
+        matchedItems.forEach((element) => {
+          const item = document.createElement("div");
+          item.setAttribute("class", "item");
+          item.innerHTML = `<h2>${element.name}</h2><h2>Amount:${element.amount}</h2><p>${element.description}</p>`;
+
+          const button = document.createElement("button");
+          button.innerText = "DELETE";
+          button.addEventListener("click", (e) =>
+            deleteWhenSearch(element.id, e)
+          );
+
+          item.appendChild(button);
+          rootElement.appendChild(item);
+        });
+
+        document.getElementById("list").appendChild(rootElement);
+      }
+    } else {
+      LoadData();
+    }
+  }
+};
+
+document.getElementById("search-bar").addEventListener("input", search);

@@ -115,6 +115,8 @@ document.getElementById("close").addEventListener("click", function () {
     isVisable = false;
 });
 document.getElementById("add").addEventListener("click", function () {
+    document.getElementById("search-bar").value = "";
+    search();
     document.getElementById("add-menu").style.display = "flex";
     document.getElementById("add-menu").style.animation =
         "fadeIn 0.3s ease-in-out";
@@ -165,4 +167,53 @@ document.getElementById("add-to-list").addEventListener("submit", function (e) {
         LoadData();
     }
 });
+//
+var deleteWhenSearch = function (id, e) {
+    var parent = e.target.parentElement;
+    var list = JSON.parse(document.cookie.toString().split("=")[1]);
+    var newList = list.filter(function (item) { return item.id !== id; });
+    document.cookie = "list=" + JSON.stringify(newList) + ";expires=Thu, 18 Dec 3999 12:00:00 UTC";
+    parent.remove();
+    search();
+};
 //search
+var search = function () {
+    if (document.cookie === "" || document.cookie.length === 7) {
+        document.getElementById("no-products").style.display = "flex";
+        if (document.getElementById("list") !== null) {
+            document.getElementById("list").innerHTML = "";
+        }
+    }
+    else {
+        document.getElementById("list").innerHTML = "";
+        var value_1 = document.getElementById("search-bar").value.toString();
+        if (value_1.length > 0) {
+            var list = JSON.parse(document.cookie.toString().split("=")[1]);
+            var matchedItems = list.filter(function (item) { return item.name.indexOf(value_1) !== -1; });
+            if (matchedItems.length === 0) {
+                document.getElementById("no-products").style.display = "flex";
+            }
+            else {
+                var rootElement_1 = document.createElement("div");
+                rootElement_1.setAttribute("id", "search-result");
+                matchedItems.forEach(function (element) {
+                    var item = document.createElement("div");
+                    item.setAttribute("class", "item");
+                    item.innerHTML = "<h2>" + element.name + "</h2><h2>Amount:" + element.amount + "</h2><p>" + element.description + "</p>";
+                    var button = document.createElement("button");
+                    button.innerText = "DELETE";
+                    button.addEventListener("click", function (e) {
+                        return deleteWhenSearch(element.id, e);
+                    });
+                    item.appendChild(button);
+                    rootElement_1.appendChild(item);
+                });
+                document.getElementById("list").appendChild(rootElement_1);
+            }
+        }
+        else {
+            LoadData();
+        }
+    }
+};
+document.getElementById("search-bar").addEventListener("input", search);
