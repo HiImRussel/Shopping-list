@@ -129,6 +129,8 @@ document.getElementById("close").addEventListener("click", function () {
 });
 //handler to open add product menu
 document.getElementById("add").addEventListener("click", function () {
+    document.getElementById("error-msg").style.display = "none";
+    document.getElementsByName("Name")[0].style.border = "0px";
     document.getElementById("search-bar").value = "";
     search();
     document.getElementById("add-menu").style.display = "flex";
@@ -143,6 +145,10 @@ document.getElementById("add-menu").addEventListener("animationend", function ()
     }
     else {
         document.getElementById("add-menu").style.display = "none";
+        document.getElementsByName("Amount")[0].value = "";
+        document.getElementsByName("Description")[0].value = "";
+        document.getElementsByName("Category")[0].value = "Food";
+        document.getElementsByName("Name")[0].value = "";
     }
 });
 //adding product to list
@@ -152,7 +158,8 @@ document.getElementById("add-to-list").addEventListener("submit", function (e) {
     var amount = parseFloat(document.getElementsByName("Amount")[0].value);
     var description = document.getElementsByName("Description")[0].value.toString();
     var category = document.getElementsByName("Category")[0].value.toString();
-    if (name.length > 0) {
+    if (name.length > 0 && name.length <= 30) {
+        document.getElementById("error-msg").style.display = "none";
         if (description.length <= 50) {
             document.getElementsByName("Name")[0].style.border = "0px";
             //new item to list
@@ -188,6 +195,7 @@ document.getElementById("add-to-list").addEventListener("submit", function (e) {
     }
     else {
         document.getElementsByName("Name")[0].style.border = "1px solid red";
+        document.getElementById("error-msg").style.display = "block";
     }
 });
 //delete when searching

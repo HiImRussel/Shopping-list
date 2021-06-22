@@ -153,6 +153,8 @@ document.getElementById("close").addEventListener("click", () => {
 
 //handler to open add product menu
 document.getElementById("add").addEventListener("click", () => {
+  document.getElementById("error-msg").style.display="none";
+  document.getElementsByName("Name")[0].style.border = "0px";
   (document.getElementById("search-bar") as HTMLInputElement).value = "";
   search();
   document.getElementById("add-menu").style.display = "flex";
@@ -167,6 +169,16 @@ document.getElementById("add-menu").addEventListener("animationend", () => {
     document.getElementById("add-menu").style.display = "flex";
   } else {
     document.getElementById("add-menu").style.display = "none";
+    (document.getElementsByName("Amount")[0] as HTMLInputElement).value="";
+    (
+      document.getElementsByName("Description")[0] as HTMLInputElement
+    ).value="";
+    (
+      document.getElementsByName("Category")[0] as HTMLInputElement
+    ).value="Food";
+    (
+      document.getElementsByName("Name")[0] as HTMLInputElement
+    ).value=""
   }
 });
 
@@ -187,7 +199,8 @@ document.getElementById("add-to-list").addEventListener("submit", (e) => {
     document.getElementsByName("Category")[0] as HTMLInputElement
   ).value.toString();
 
-  if (name.length > 0) {
+  if (name.length > 0 && name.length<=30) {
+    document.getElementById("error-msg").style.display="none"
     if (description.length <= 50) {
       document.getElementsByName("Name")[0].style.border = "0px";
       //new item to list
@@ -227,6 +240,7 @@ document.getElementById("add-to-list").addEventListener("submit", (e) => {
     }
   } else {
     document.getElementsByName("Name")[0].style.border = "1px solid red";
+    document.getElementById("error-msg").style.display="block"
   }
 });
 

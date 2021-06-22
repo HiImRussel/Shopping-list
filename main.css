@@ -112,7 +112,7 @@ main {
 }
 
 #no-products {
-  height: calc(100% - 75px);
+  height: calc(100vh - 75px);
   display: none;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -128,12 +128,16 @@ main {
 
 #no-products svg {
   margin-top: 30px;
-  height: 60vh;
+  height: 50vh;
+  max-width: 90vw;
 }
 
 #no-products h3 {
   margin-top: 20px;
   color: #c5c5c5;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: center;
 }
 
 #close {
@@ -357,7 +361,7 @@ main {
   opacity: 0;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  height: 150px;
+  min-height: 150px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -373,6 +377,9 @@ main {
           flex-direction: column;
   position: relative;
   margin: 15px;
+  max-width: 80%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .rootElement .item button {
@@ -383,6 +390,13 @@ main {
   border-radius: 50px;
   color: white;
   cursor: pointer;
+}
+
+.rootElement .item p {
+  position: relative;
+  max-width: 80%;
+  text-align: center;
+  word-wrap: break-word;
 }
 
 #search-result {
@@ -431,5 +445,20 @@ main {
   border-radius: 50px;
   color: white;
   cursor: pointer;
+}
+
+#error-msg {
+  width: 100%;
+  font-size: 0.8em;
+  margin-bottom: 10px;
+  color: red;
+  text-align: left;
+  display: none;
+}
+
+@media only screen and (max-width: 400px) {
+  nav h1 {
+    font-size: 0.8em;
+  }
 }
 /*# sourceMappingURL=main.css.map */

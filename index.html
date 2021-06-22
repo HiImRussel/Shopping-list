@@ -429,9 +429,10 @@
       <form id="add-to-list">
         <h3>Fill inputs with data</h3>
         <div>
-          <input type="text" placeholder="Name" name="Name" />
-          <input type="number" placeholder="Amount" name="Amount" />
+          <input type="text" placeholder="Name" name="Name" maxlength="30"/>
+          <input type="number" placeholder="Amount" name="Amount" maxlength="3"/>
         </div>
+        <p id="error-msg">Name is required, less than 30 characters</p>
         <select name="Category">
           <option>Food</option>
           <option>Drinks</option>
